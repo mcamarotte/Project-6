@@ -9,15 +9,15 @@ const path = require('path');
 
 require('dotenv').config();
 
-const saucesRoutes = require('./backend/routes/sauces');
-const userRoutes = require('./backend/routes/user')
+const saucesRoutes = require('../backend/routes/sauces');
+const userRoutes = require('../backend/routes/user')
 
-const Sauce = require('./backend/models/sauces');
+const Sauce = require('../backend/models/sauces');
  
 //Connect to the Mongo DB database
 mongoose
   .connect(
-    `mongodb+srv://mcamarotte:<Ita218.Child.18*> @cluster0.q6ux1.mongodb.net/mcamarotte?retryWrites=true&w=majority`,
+    `mongodb+srv://mcamarotte:<Ita218.Child.18%2A> @cluster0.q6ux1.mongodb.net/mcamarotte?retryWrites=true&w=majority`,
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connection to MongoDB succesful!"))
