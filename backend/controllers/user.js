@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const webtoken = require('jsonwebtoken');
 const cryptojs = require('crypto-js');
 
-const User = require('../models/user');
+const User = require('../backend/models/user');
 
 exports.signup = (req, res, next) => {
   //require a strong password of at least 8 characters  
