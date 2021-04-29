@@ -5,9 +5,9 @@ const mongoSanitize = require('express-mongo-sanitize');
 const app = express();
 const path = require('path');
 require('dotenv').config();
-const saucesRoutes = require('./routes/sauces');
-const userRoutes = require('./routes/user')
-const Sauce = require('./models/sauces');
+const saucesRoutes = require('../routes/sauces');
+const userRoutes = require('../routes/user')
+const Sauce = require('../models/sauces');
  
 //Connect to the Mongo DB database
 mongoose.connect(`mongodb+srv://mcamarotte:Ita218.Child.18%2A @cluster0.q6ux1.mongodb.net/project6?retryWrites=true&w=majority`,
