@@ -2,24 +2,20 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const mongoSanitize = require('express-mongo-sanitize');
-
 const app = express();
-
 const path = require('path');
-
 require('dotenv').config();
-
-const saucesRoutes = require('../backend/routes/sauces');
-const userRoutes = require('../backend/routes/user')
-
-const Sauce = require('../backend/models/sauces');
+const saucesRoutes = require('./routes/sauces');
+const userRoutes = require('./routes/user')
+const Sauce = require('./models/sauces');
  
 //Connect to the Mongo DB database
-mongoose
-  .connect(
-    `mongodb+srv://mcamarotte:<Ita218.Child.18%2A> @cluster0.q6ux1.mongodb.net/mcamarotte?retryWrites=true&w=majority`,
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+mongoose.connect(`mongodb+srv://mcamarotte:Ita218.Child.18%2A @cluster0.q6ux1.mongodb.net/project6?retryWrites=true&w=majority`,
+{ 
+ useNewUrlParser: true, 
+ useUnifiedTopology: true 
+})
+
   .then(() => console.log("Connection to MongoDB succesful!"))
   .catch(() => console.log("Connection to MongoDB failure!"));
 
