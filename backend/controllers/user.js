@@ -1,16 +1,17 @@
 const bcrypt = require('bcrypt');
 const webtoken = require('jsonwebtoken');
 const cryptojs = require('crypto-js');
-
-const User = require('../backend/models/user');
+const User = require('./models/user');
 
 exports.signup = (req, res, next) => {
+  
   //require a strong password of at least 8 characters  
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z0-9\d@$!%*?&]{8,}$/; 
   const password = req.body.password;
   const crypEmail = cryptojs.HmacSHA256(req.body.email, process.env.EMAIL_ENCRYPTION_KEY).toString();
 
   if (password.match(regex)) {
+    
   //create hashes user password
   bcrypt.hash(password, 10)
     .then(hash => {
@@ -18,6 +19,7 @@ exports.signup = (req, res, next) => {
         email: crypEmail,
         password: hash
       });
+    
       //adds user to database
       user.save()
         .then(() => res.status(201).json({ message: 'User created!' }))
