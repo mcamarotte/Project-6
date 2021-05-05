@@ -5,19 +5,20 @@ const mongoSanitize = require('express-mongo-sanitize');
 const app = express();
 const path = require('path');
 require('dotenv').config();
-const saucesRoutes = require('../routes/sauces');
-const userRoutes = require('../routes/user')
-const Sauce = require('../models/sauces');
+const saucesRoutes = require('./routes/sauces');
+const userRoutes = require('./routes/user')
+const Sauce = require('./models/sauces');
  
 //Connect to the Mongo DB database
-mongoose.connect(`mongodb+srv://mcamarotte:Ita218.Child.18%2A @cluster0.q6ux1.mongodb.net/project6?retryWrites=true&w=majority`,
+mongoose.connect(`mongodb+srv://mcamarotte:Ita218.Child.18%2A@cluster0.q6ux1.mongodb.net/project6?retryWrites=true&w=majority`,
+
 { 
- useNewUrlParser: true, 
- useUnifiedTopology: true 
+      useNewUrlParser: true, 
+      useUnifiedTopology: true 
 })
 
   .then(() => console.log("Connection to MongoDB succesful!"))
-  .catch(() => console.log("Connection to MongoDB failure!"));
+  .catch((error) => console.log("Connection to MongoDB failure!",error));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -34,6 +35,7 @@ app.use(mongoSanitize({
 
 //make the images publicly accessible for all requests to the route - images
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
 app.use('/api/sauces', saucesRoutes);
 app.use('/api/auth', userRoutes)
 
