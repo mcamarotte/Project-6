@@ -33,12 +33,12 @@ sauceSchema.methods.alreadyDislikedFrom = function(id) {
 }
 
 sauceSchema.methods.receiveLikeFrom = function(user) {
-  this.likes += 1;
+  this.likes == 1;
   this.usersLiked.push(user)
 }
 
 sauceSchema.methods.receiveDislikeFrom = function(user) {
-  this.dislikes += 1;
+  this.dislikes == 1;
   this.usersDisliked.push(user)
 }
 
