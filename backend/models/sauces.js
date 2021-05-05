@@ -10,55 +10,54 @@ const sauceSchema = mongoose.Schema({
   heat: { type: Number, required: true },
   likes: { type: Number, default: 0 },
   dislikes: { type: Number, default: 0 },
-  userLiked: { type: Array, default: [] },
-  userDisliked: { type: Array, default: [] },
+  usersLiked: { type: Array, default: [] },
+  usersDisliked: { type: Array, default: [] },
 });
 
 sauceSchema.methods.likeOrDislike = function(like, user) {
-  const userLike = !this.liked (user) && like === 1
-  const userDislike = !this.disliked (user) && like === -1
-  const userCancelVote  = like === 0
+  const wantsToLike    = !this.alreadyLikedFrom(user) && like === 1
+  const wantsToDislike = !this.alreadyDislikedFrom(user) && like === -1
+  const wantsToUnvote  = like === 0
 
-// Like or dislike the sauce 
-  if (userLike) this.receiveLike(user)
-  else if (userDislike) this.receiveDislike(user)
-  else if (userCancelVote) this.resetLikes(user)
+  if (wantsToLike)         this.receiveLikeFrom(user)
+  else if (wantsToDislike) this.receiveDislikeFrom(user)
+  else if (wantsToUnvote)  this.resetLikesFrom(user)
 }
-// Add the user ID to the array
-sauceSchema.methods.Liked = function(id) {
-  return this.userLiked.find (userId => userId.equals(id));
+
+sauceSchema.methods.alreadyLikedFrom = function(id) {
+  return this.usersLiked.find(userId => userId.equals(id));
 }
-// Remove the user ID from the array
-sauceSchema.methods.Disliked = function(id) {
-  return this.userDisliked.find (userId => userId.equals(id));
+
+sauceSchema.methods.alreadyDislikedFrom = function(id) {
+  return this.usersDisliked.find(userId => userId.equals(id));
 }
-// Total number of like to be updated with each like 
-sauceSchema.methods.receiveLike = function(user) {
+
+sauceSchema.methods.receiveLikeFrom = function(user) {
   this.likes += 1;
-  this.userLiked.push(user)
+  this.usersLiked.push(user)
 }
-// Total number of dislike to be updated with each dislike
-sauceSchema.methods.receiveDislike = function(user) {
+
+sauceSchema.methods.receiveDislikeFrom = function(user) {
   this.dislikes += 1;
-  this.userDisliked.push(user)
+  this.usersDisliked.push(user)
 }
-// Reset the user like or dislike 
-sauceSchema.methods.resetLikes = function(user) {
-  if (this.liked (user)) {
-    this.removeLike(user)
-  } else if (this.disliked (user)) {
-    this.removeDislike(user)
+
+sauceSchema.methods.resetLikesFrom = function(user) {
+  if (this.alreadyLikedFrom(user)) {
+    this.removeLikeFrom(user)
+  } else if (this.alreadyDislikedFrom(user)) {
+    this.removeDislikeFrom(user)
   }
 }
 
-sauceSchema.methods.removeLike = function(user) {
+sauceSchema.methods.removeLikeFrom = function(user) {
   this.likes -= 1
-  this.userLiked = this.userLiked.filter(userId => !userId.equals(user))
+  this.usersLiked = this.usersLiked.filter(userId => !userId.equals(user))
 }
 
-sauceSchema.methods.removeDislike = function(user) {
+sauceSchema.methods.removeDislikeFrom = function(user) {
   this.dislikes -= 1
-  this.userDisliked = this.userDisliked.filter(userId => !userId.equals(user))
+  this.usersDisliked = this.usersDisliked.filter(userId => !userId.equals(user))
 }
 
 module.exports = mongoose.model('Sauce', sauceSchema);
