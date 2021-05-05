@@ -1,5 +1,5 @@
 const fs = require('fs');
-const Sauce = require('./models/sauces');
+const Sauce = require('../models/sauces');
 
 exports.createSauce = (req, res, next) => {
   const sauceObj = JSON.parse(req.body.sauce);
@@ -52,12 +52,12 @@ exports.getAllSauces = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 };
 
-exports.likeOrDislikeSauce = (req, res, next) => {
+exports.modifyVoteSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
-    .then(sauce => {
-      sauce.likeOrDislike(req.body.like, req.user._id)
-      sauce.save()
-      .then(() => res.status(201).json({message: 'Recorded notice!'}))
-      .catch(error => res.status(400).json({ error }));
-    });
+  .then(sauce => {
+    sauce.likeOrDislike(req.body.like, req.user._id)
+    sauce.save()
+    .then(() => res.status(201).json({message: 'Avis enregistrée !'}))
+    .catch(error => res.status(400).json({ error }));
+  });
 };
