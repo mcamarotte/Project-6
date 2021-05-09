@@ -103,7 +103,7 @@ exports.modifyVoteSauce = (req, res, next) => {
   .then(sauce => {
     sauce.likeOrDislike(req.body.like, req.user._id)
     sauce.save()
-    .then(() => res.status(201).json({message: 'Avis enregistrée !'}))
+    .then(() => res.status(201).json({message: 'Recorded souce !'}))
     .catch(error => res.status(400).json({ error }));
   });
 };
